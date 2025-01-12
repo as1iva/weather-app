@@ -51,6 +51,7 @@ public class WebConfig {
     @Bean
     public SpringTemplateEngine templateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+
         templateEngine.setTemplateResolver(templateResolver());
         templateEngine.setEnableSpringELCompiler(true);
 
@@ -60,6 +61,7 @@ public class WebConfig {
     @Bean
     public ThymeleafViewResolver viewResolver() {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+
         viewResolver.setTemplateEngine(templateEngine());
         viewResolver.setOrder(1);
 
