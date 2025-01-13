@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -29,10 +29,10 @@ public class WebConfig {
 
     private final ApplicationContext applicationContext;
 
-    private final ConfigurableEnvironment env;
+    private final Environment env;
 
     @Autowired
-    public WebConfig(ApplicationContext applicationContext, ConfigurableEnvironment env) {
+    public WebConfig(ApplicationContext applicationContext, Environment env) {
         this.applicationContext = applicationContext;
         this.env = env;
     }
