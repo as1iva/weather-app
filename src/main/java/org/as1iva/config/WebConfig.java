@@ -22,7 +22,7 @@ import java.util.Properties;
 
 @Configuration
 @ComponentScan("org.as1iva")
-@PropertySource("classpath:application.yml")
+@PropertySource("classpath:application.properties")
 @EnableTransactionManagement
 @EnableWebMvc
 public class WebConfig {
