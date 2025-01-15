@@ -3,7 +3,7 @@ package org.as1iva.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -23,5 +23,5 @@ public class Session {
     private User userId;
 
     @Column(name = "expires_at", nullable = false)
-    private Date expiresAt;
+    private LocalDateTime expiresAt;
 }
