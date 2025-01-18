@@ -50,7 +50,7 @@ public class AuthController {
 
             model.addAttribute("messageError", error);
 
-            return "sign-in-with-errors";
+            return SIGN_IN;
         }
 
         Session session = authService.createSession(user.get());
@@ -93,7 +93,7 @@ public class AuthController {
                 || model.containsAttribute("passwordError")
                 || model.containsAttribute("usernameError")) {
 
-            return "sign-up-with-errors";
+            return SIGN_UP;
         }
 
         User user = authService.createUser(login, password);
