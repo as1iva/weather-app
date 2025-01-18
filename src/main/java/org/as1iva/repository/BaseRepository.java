@@ -51,6 +51,9 @@ public abstract class BaseRepository<K extends Serializable, E> implements CrudR
 
     @Override
     public void delete(K id) {
-        // TODO: реализовать метод
+        Session session = sessionFactory.getCurrentSession();
+        E entity = findById(id).orElseThrow(()-> new RuntimeException());
+
+        session.remove(entity);
     }
 }
