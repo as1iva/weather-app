@@ -23,11 +23,15 @@ public class AuthController {
 
     private static final String REDIRECT_TO_LOGIN = "redirect:/login";
 
+    private static final String SIGN_IN = "sign-in";
+
+    private static final String SIGN_UP = "sign-up";
+
     private final AuthService authService;
 
     @GetMapping("/login")
     public String signIn() {
-        return "sign-in";
+        return SIGN_IN;
     }
 
     @Transactional
@@ -57,7 +61,7 @@ public class AuthController {
 
     @GetMapping("/registration")
     public String signUp() {
-        return "sign-up";
+        return SIGN_UP;
     }
 
     @Transactional
