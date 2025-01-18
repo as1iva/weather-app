@@ -22,14 +22,28 @@
 
     <div class="row justify-content-center">
         <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+            <div class="alert alert-danger" role="alert" th:if="${messageError != null}">
+                <span th:text="${messageError}"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-4 col-md-6 col-sm-12">
             <form method="post" th:action="@{/registration}" class="mt-4">
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" required value=""/>
+                    <div class="input-group has-validation">
+                        <input type="text" class="form-control" th:classappend="${usernameError != null ? 'is-invalid' : ''}" id="username" name="username" required th:value="${username}"/>
+                        <div class="invalid-feedback" th:if="${usernameError != null}" th:text="${usernameError}"></div>
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" required value=""/>
+                    <div class="input-group has-validation">
+                        <input type="password" class="form-control" th:classappend="${passwordError != null ? 'is-invalid' : ''}" id="password" name="password" required value=""/>
+                        <div class="invalid-feedback" th:if="${passwordError != null}" th:text="${passwordError}"></div>
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="repeat-password" class="form-label">Repeat password</label>
