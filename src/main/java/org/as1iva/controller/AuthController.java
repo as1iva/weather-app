@@ -7,7 +7,6 @@ import org.as1iva.entity.Session;
 import org.as1iva.entity.User;
 import org.as1iva.service.AuthService;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +34,6 @@ public class AuthController {
         return SIGN_IN;
     }
 
-    @Transactional
     @PostMapping("/login")
     public String loginUser(@RequestParam(name = "username") String login,
                             @RequestParam(name = "password") String password,
@@ -65,7 +63,6 @@ public class AuthController {
         return SIGN_UP;
     }
 
-    @Transactional
     @PostMapping("/registration")
     public String registerUser(@RequestParam(name = "username") String login,
                                @RequestParam(name = "password") String password,
@@ -105,7 +102,6 @@ public class AuthController {
         return REDIRECT_TO_INDEX;
     }
 
-    @Transactional
     @PostMapping("/logout")
     public String logoutUser(@CookieValue(name = "sessionId", required = false) String sessionId,
                              HttpServletResponse resp) {
