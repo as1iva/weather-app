@@ -65,18 +65,4 @@ public class AuthService {
             sessionRepository.delete(sessionId);
         }
     }
-
-    public Cookie getCookie(HttpServletRequest req) {
-        Cookie[] cookies = req.getCookies();
-
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("sessionId")) {
-                    return cookie;
-                }
-            }
-        }
-
-        return null;
-    }
 }

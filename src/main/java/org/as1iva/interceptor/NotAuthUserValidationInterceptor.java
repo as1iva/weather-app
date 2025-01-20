@@ -8,6 +8,7 @@ import org.as1iva.service.AuthService;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.util.WebUtils;
 
 @Component
 @RequiredArgsConstructor
@@ -20,7 +21,7 @@ public class NotAuthUserValidationInterceptor implements HandlerInterceptor {
                              @NonNull HttpServletResponse resp,
                              @NonNull Object handler) throws Exception {
 
-        Cookie cookie = authService.getCookie(req);
+        Cookie cookie = WebUtils.getCookie(req, "sessionId");
 
         if (isSessionNotValid(cookie)) {
             resp.sendRedirect("/login");
