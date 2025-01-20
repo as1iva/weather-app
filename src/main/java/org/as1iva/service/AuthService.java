@@ -1,8 +1,5 @@
 package org.as1iva.service;
 
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.as1iva.entity.Session;
 import org.as1iva.entity.User;
@@ -69,12 +66,6 @@ public class AuthService {
         }
     }
 
-    public void createCookie(Session session, HttpServletResponse resp) {
-        Cookie cookie = new Cookie("sessionId", session.getId());
-        cookie.setAttribute("expires_at", session.getExpiresAt().toString());
-        resp.addCookie(cookie);
-    }
-
     public Cookie getCookie(HttpServletRequest req) {
         Cookie[] cookies = req.getCookies();
 
@@ -87,11 +78,5 @@ public class AuthService {
         }
 
         return null;
-    }
-
-    public void deleteCookie(HttpServletResponse resp, String attribute){
-        Cookie cookie = new Cookie(attribute, null);
-        cookie.setMaxAge(0);
-        resp.addCookie(cookie);
     }
 }

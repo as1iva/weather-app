@@ -1,5 +1,6 @@
 package org.as1iva.controller;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.as1iva.entity.Session;
@@ -54,7 +55,7 @@ public class AuthController {
         }
 
         Session session = authService.createSession(user.get());
-        authService.createCookie(session, resp);
+        createCookie(session, resp);
 
         return REDIRECT_TO_INDEX;
     }
@@ -99,7 +100,7 @@ public class AuthController {
         User user = authService.createUser(login, password);
 
         Session session = authService.createSession(user);
-        authService.createCookie(session, resp);
+        createCookie(session, resp);
 
         return REDIRECT_TO_INDEX;
     }
@@ -110,8 +111,20 @@ public class AuthController {
                              HttpServletResponse resp) {
 
         authService.deleteSession(sessionId);
-        authService.deleteCookie(resp, "sessionId");
+        deleteCookie("sessionId", resp);
 
         return REDIRECT_TO_LOGIN;
+    }
+
+    public void createCookie(Session session, HttpServletResponse resp) {
+        Cookie cookie = new Cookie("sessionId", session.getId());
+        cookie.setAttribute("expires_at", session.getExpiresAt().toString());
+        resp.addCookie(cookie);
+    }
+
+    public void deleteCookie(String attribute, HttpServletResponse resp){
+        Cookie cookie = new Cookie(attribute, null);
+        cookie.setMaxAge(0);
+        resp.addCookie(cookie);
     }
 }
