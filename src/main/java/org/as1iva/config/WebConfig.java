@@ -13,6 +13,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -158,5 +159,12 @@ public class WebConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(sessionValidationInterceptor)
                 .addPathPatterns("/");
+    }
+
+    @Bean
+    public WebClient webClient() {
+        return WebClient.builder()
+                .baseUrl("http://api.openweathermap.org")
+                .build();
     }
 }
