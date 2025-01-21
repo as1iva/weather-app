@@ -18,7 +18,7 @@
             Weather Tracker
         </a>
         <div class="d-flex align-items-center">
-            <span class="navbar-text me-3">zhukovsd</span>
+            <span class="navbar-text me-3" th:text="${username}"></span>
 
             <form method="post" th:action="@{/logout}">
                 <button class="btn btn-outline-danger">Sign out</button>
