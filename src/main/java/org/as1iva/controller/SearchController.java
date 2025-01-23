@@ -27,9 +27,9 @@ public class SearchController {
     private final AuthService authService;
 
     @GetMapping("/search")
-    public String search(@RequestParam(name = "name") String name,
-                         Model model,
-                         HttpServletRequest req) throws JsonProcessingException {
+    public String searchLocation(@RequestParam(name = "name") String name,
+                                 Model model,
+                                 HttpServletRequest req) throws JsonProcessingException {
 
         Cookie cookie = WebUtils.getCookie(req, "sessionId");
         Session session = authService.getSession(cookie.getValue()).get();
