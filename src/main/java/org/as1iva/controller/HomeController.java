@@ -8,8 +8,6 @@ import org.as1iva.service.AuthService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
 @Controller
@@ -27,13 +25,5 @@ public class HomeController {
         model.addAttribute("username", session.getUserId().getLogin());
 
         return "index";
-    }
-
-    @PostMapping("/")
-    public String search(String name, RedirectAttributes redirectAttributes) {
-
-        redirectAttributes.addAttribute("name", name);
-
-        return "redirect:/search";
     }
 }
