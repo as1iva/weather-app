@@ -31,7 +31,7 @@
     <div class="container mt-4">
         <form method="get" th:action="@{/search}" class="d-flex my-4">
             <div class="input-group location-search-input-group me-3">
-                <input class="form-control" type="text" name="name" placeholder="Enter location" required>
+                <input class="form-control" type="text" name="name" placeholder="Enter location" required th:value="${name}"/>
                 <button class="btn btn-outline-secondary btn-sm clear-input-button" type="button"
                         onclick="this.previousElementSibling.value=''">
                     &times;
