@@ -52,7 +52,13 @@
                             <p class="card-text mb-1" th:text="${location.getLatitude()}"></p>
                             <p class="card-text mb-1" th:text="${location.getLongitude()}"></p>
                             <div class="mt-auto">
-                                <button class="btn btn-primary w-100">Add</button>
+                                <form method="post" th:action="@{/search}">
+                                    <input type="hidden" name="name" th:value="${location.getName()}">
+                                    <input type="hidden" name="lat" th:value="${location.getLatitude()}">
+                                    <input type="hidden" name="lon" th:value="${location.getLongitude()}">
+
+                                    <button class="btn btn-primary w-100">Add</button>
+                                </form>
                             </div>
                         </div>
                     </div>
