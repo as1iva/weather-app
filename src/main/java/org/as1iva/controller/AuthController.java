@@ -107,7 +107,7 @@ public class AuthController {
                              HttpServletResponse resp) {
 
         authService.deleteSession(sessionId);
-        deleteCookie("sessionId", resp);
+        deleteCookie(resp);
 
         return REDIRECT_TO_LOGIN;
     }
@@ -118,8 +118,8 @@ public class AuthController {
         resp.addCookie(cookie);
     }
 
-    public void deleteCookie(String attribute, HttpServletResponse resp){
-        Cookie cookie = new Cookie(attribute, null);
+    public void deleteCookie(HttpServletResponse resp){
+        Cookie cookie = new Cookie("sessionId", null);
         cookie.setMaxAge(0);
         resp.addCookie(cookie);
     }
