@@ -46,6 +46,7 @@ public class SearchController {
 
         List<LocationResponseDto> locations = weatherApiService.getLocations(name);
 
+        model.addAttribute("name", name);
         model.addAttribute("username", session.getUserId().getLogin());
         model.addAttribute(locations);
 
