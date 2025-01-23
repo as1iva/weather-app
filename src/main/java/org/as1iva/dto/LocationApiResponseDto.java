@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class LocationResponseDto {
+public class LocationApiResponseDto {
 
     @JsonProperty("name")
     private String name;

@@ -5,7 +5,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.as1iva.dto.LocationRequestDto;
-import org.as1iva.dto.LocationResponseDto;
+import org.as1iva.dto.LocationApiResponseDto;
 import org.as1iva.entity.Session;
 import org.as1iva.entity.User;
 import org.as1iva.service.AuthService;
@@ -44,7 +44,7 @@ public class SearchController {
         Cookie cookie = WebUtils.getCookie(req, "sessionId");
         Session session = authService.getSession(cookie.getValue()).get();
 
-        List<LocationResponseDto> locations = weatherApiService.getLocations(name);
+        List<LocationApiResponseDto> locations = weatherApiService.getLocations(name);
 
         model.addAttribute("name", name);
         model.addAttribute("username", session.getUserId().getLogin());

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.as1iva.dto.LocationResponseDto;
+import org.as1iva.dto.LocationApiResponseDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +24,7 @@ public class WeatherApiService {
     @Value("${api.key}")
     private String apiKey;
 
-    public List<LocationResponseDto> getLocations(String city) throws JsonProcessingException {
+    public List<LocationApiResponseDto> getLocations(String city) throws JsonProcessingException {
         String jsonResponse = webClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/geo/1.0/direct")
@@ -36,6 +36,6 @@ public class WeatherApiService {
                 .bodyToMono(String.class)
                 .block();
 
-        return objectMapper.readValue(jsonResponse, new TypeReference<List<LocationResponseDto>>() {});
+        return objectMapper.readValue(jsonResponse, new TypeReference<List<LocationApiResponseDto>>() {});
     }
 }
