@@ -38,12 +38,12 @@ public class SearchController {
                                  @CookieValue(name = "sessionId", required = false) String sessionId,
                                  Model model) throws JsonProcessingException {
 
-        Session session = authService.getSession(sessionId).get();
+        User user = authService.getSession(sessionId).get().getUserId();
 
         List<LocationApiResponseDto> locations = weatherApiService.getLocations(name);
 
         model.addAttribute("name", name);
-        model.addAttribute("username", session.getUserId().getLogin());
+        model.addAttribute("username", user.getLogin());
         model.addAttribute(locations);
 
         return SEARCH;
