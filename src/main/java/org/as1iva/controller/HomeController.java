@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 public class HomeController {
 
+    private static final String INDEX = "index";
+
     private final AuthService authService;
 
     @GetMapping("/")
@@ -22,6 +24,6 @@ public class HomeController {
 
         model.addAttribute("username", session.getUserId().getLogin());
 
-        return "index";
+        return INDEX;
     }
 }
