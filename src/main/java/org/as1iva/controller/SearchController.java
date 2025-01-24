@@ -1,8 +1,6 @@
 package org.as1iva.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.as1iva.dto.LocationRequestDto;
 import org.as1iva.dto.LocationApiResponseDto;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.util.WebUtils;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -38,11 +35,10 @@ public class SearchController {
 
     @GetMapping("/search")
     public String searchLocation(@RequestParam(name = "name") String name,
-                                 Model model,
-                                 HttpServletRequest req) throws JsonProcessingException {
+                                 @CookieValue(name = "sessionId", required = false) String sessionId,
+                                 Model model) throws JsonProcessingException {
 
-        Cookie cookie = WebUtils.getCookie(req, "sessionId");
-        Session session = authService.getSession(cookie.getValue()).get();
+        Session session = authService.getSession(sessionId).get();
 
         List<LocationApiResponseDto> locations = weatherApiService.getLocations(name);
 
