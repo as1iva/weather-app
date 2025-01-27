@@ -12,7 +12,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserAuthenticationFailedException.class)
     public String handle(UserAuthenticationFailedException e, Model model) {
-        model.addAttribute("messageError", e.getMessage());
+        model.addAttribute("error", e.getMessage());
         return SIGN_IN;
     }
 }
