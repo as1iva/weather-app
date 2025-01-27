@@ -35,10 +35,7 @@ public class AuthController {
     @PostMapping("/login")
     public String loginUser(@RequestParam(name = "username") String login,
                             @RequestParam(name = "password") String password,
-                            Model model,
                             HttpServletResponse resp) {
-
-        model.addAttribute("username", login);
 
         SessionDto sessionDto = authService.signInUser(login, password);
 
