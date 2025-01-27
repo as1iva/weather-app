@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.as1iva.dto.SessionDto;
 import org.as1iva.entity.Session;
 import org.as1iva.entity.User;
+import org.as1iva.exception.UserAuthenticationFailedException;
 import org.as1iva.repository.SessionRepository;
 import org.as1iva.repository.UserRepository;
 import org.mindrot.jbcrypt.BCrypt;
@@ -29,6 +30,16 @@ public class AuthService {
 
     public String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    public SessionDto signInUser(String login, String password) {
+        Optional<User> user = userRepository.findByLogin(login);
+
+        if (!user.isPresent() || !isPasswordCorrect(password, user.get())) {
+            throw new UserAuthenticationFailedException("Incorrect username or password");
+        }
+
+        return createSession(user.get());
     }
 
     public User createUser(String login, String password) {
