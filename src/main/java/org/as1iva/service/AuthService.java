@@ -1,6 +1,7 @@
 package org.as1iva.service;
 
 import lombok.RequiredArgsConstructor;
+import org.as1iva.dto.SessionDto;
 import org.as1iva.entity.Session;
 import org.as1iva.entity.User;
 import org.as1iva.repository.SessionRepository;
@@ -43,7 +44,7 @@ public class AuthService {
         return userRepository.findByLogin(login);
     }
 
-    public Session createSession(User user) {
+    public SessionDto createSession(User user) {
         String sessionId = UUID.randomUUID().toString();
         LocalDateTime time = LocalDateTime.now();
 
@@ -53,7 +54,12 @@ public class AuthService {
                 .expiresAt(time.plusDays(5))
                 .build();
 
-        return sessionRepository.save(session);
+        sessionRepository.save(session);
+
+        return SessionDto.builder()
+                .id(session.getId())
+                .expiresAt(session.getExpiresAt())
+                .build();
     }
 
     public Optional<Session> getSession(String id) {
