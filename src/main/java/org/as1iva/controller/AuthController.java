@@ -3,7 +3,7 @@ package org.as1iva.controller;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.as1iva.entity.Session;
+import org.as1iva.dto.SessionDto;
 import org.as1iva.entity.User;
 import org.as1iva.service.AuthService;
 import org.springframework.stereotype.Controller;
@@ -112,9 +112,9 @@ public class AuthController {
         return REDIRECT_TO_LOGIN;
     }
 
-    public void createCookie(Session session, HttpServletResponse resp) {
-        Cookie cookie = new Cookie("sessionId", session.getId());
-        cookie.setAttribute("expires_at", session.getExpiresAt().toString());
+    public void createCookie(SessionDto sessionDto, HttpServletResponse resp) {
+        Cookie cookie = new Cookie("sessionId", sessionDto.getId());
+        cookie.setAttribute("expires_at", sessionDto.getExpiresAt().toString());
         resp.addCookie(cookie);
     }
 
