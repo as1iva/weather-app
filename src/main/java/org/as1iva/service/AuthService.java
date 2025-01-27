@@ -36,6 +36,7 @@ public class AuthService {
         Optional<User> user = userRepository.findByLogin(login);
 
         if (!user.isPresent() || !isPasswordCorrect(password, user.get())) {
+            // TODO: можно сделать передачу логина чтобы сохранять его на фронтенде йоу
             throw new UserAuthenticationFailedException("Incorrect username or password");
         }
 
@@ -78,7 +79,7 @@ public class AuthService {
     }
 
     public void deleteSession(String sessionId) {
-        if(sessionId != null) {
+        if (sessionId != null) {
             sessionRepository.delete(sessionId);
         }
     }
