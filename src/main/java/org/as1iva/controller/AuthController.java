@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Optional;
-
 @Controller
 @RequiredArgsConstructor
 public class AuthController {
@@ -42,18 +40,9 @@ public class AuthController {
 
         model.addAttribute("username", login);
 
-        Optional<User> user = authService.findUserByLogin(login);
+        SessionDto sessionDto = authService.signInUser(login, password);
 
-        if (!user.isPresent() || !authService.isPasswordCorrect(password, user.get())) {
-            String error = "Incorrect username or password";
-
-            model.addAttribute("messageError", error);
-
-            return SIGN_IN;
-        }
-
-        Session session = authService.createSession(user.get());
-        createCookie(session, resp);
+        createCookie(sessionDto, resp);
 
         return REDIRECT_TO_INDEX;
     }
