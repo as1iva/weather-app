@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public class UserRepository extends BaseRepository<Long, User>{
+public class UserRepository extends BaseRepository<Long, User> {
 
     @Autowired
     public UserRepository(SessionFactory sessionFactory) {

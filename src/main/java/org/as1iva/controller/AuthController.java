@@ -118,7 +118,7 @@ public class AuthController {
         resp.addCookie(cookie);
     }
 
-    public void deleteCookie(HttpServletResponse resp){
+    public void deleteCookie(HttpServletResponse resp) {
         Cookie cookie = new Cookie("sessionId", null);
         cookie.setMaxAge(0);
         resp.addCookie(cookie);
