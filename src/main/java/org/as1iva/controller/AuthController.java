@@ -98,13 +98,13 @@ public class AuthController {
         return REDIRECT_TO_LOGIN;
     }
 
-    public void createCookie(SessionDto sessionDto, HttpServletResponse resp) {
+    private void createCookie(SessionDto sessionDto, HttpServletResponse resp) {
         Cookie cookie = new Cookie("sessionId", sessionDto.getId());
         cookie.setAttribute("expires_at", sessionDto.getExpiresAt().toString());
         resp.addCookie(cookie);
     }
 
-    public void deleteCookie(HttpServletResponse resp) {
+    private void deleteCookie(HttpServletResponse resp) {
         Cookie cookie = new Cookie("sessionId", null);
         cookie.setMaxAge(0);
         resp.addCookie(cookie);
