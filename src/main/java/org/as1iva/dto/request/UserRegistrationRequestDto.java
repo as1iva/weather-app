@@ -12,7 +12,7 @@ import lombok.*;
 public class UserRegistrationRequestDto {
 
     @NotBlank(message = "Login cannot be empty. Please enter a valid login")
-    @Size(min = 5, max = 10, message = "Length must be between 3 and 10")
+    @Size(min = 5, max = 15, message = "Length must be between 5 and 15")
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]+$", message = "Login must contain both English letters and numbers")
     private String login;
 
