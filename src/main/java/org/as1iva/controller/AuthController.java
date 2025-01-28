@@ -18,11 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AuthController {
 
     private static final String REDIRECT_TO_INDEX = "redirect:/";
-
     private static final String REDIRECT_TO_LOGIN = "redirect:/login";
 
     private static final String SIGN_IN = "sign-in";
-
     private static final String SIGN_UP = "sign-up";
 
     private final AuthService authService;
