@@ -78,10 +78,9 @@ public class AuthController {
             return SIGN_UP;
         }
 
-        User user = authService.createUser(login, password);
+        SessionDto sessionDto = authService.signUpUser(login, password);
 
-        Session session = authService.createSession(user);
-        createCookie(session, resp);
+        createCookie(sessionDto, resp);
 
         return REDIRECT_TO_INDEX;
     }
