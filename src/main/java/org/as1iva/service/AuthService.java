@@ -43,13 +43,15 @@ public class AuthService {
         return createSession(user.get());
     }
 
-    public User createUser(String login, String password) {
+    public SessionDto signUpUser(String login, String password) {
         User user = User.builder()
                 .login(login)
                 .password(hashPassword(password))
                 .build();
 
-        return userRepository.save(user);
+        userRepository.save(user);
+
+        return createSession(user);
     }
 
     public Optional<User> findUserByLogin(String login) {
