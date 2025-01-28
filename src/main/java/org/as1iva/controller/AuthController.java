@@ -40,12 +40,12 @@ public class AuthController {
         return REDIRECT_TO_INDEX;
     }
 
-    @GetMapping("/registration")
+    @GetMapping("/signup")
     public String signUp(@ModelAttribute("userInfo") UserRegistrationRequestDto userRegistrationRequestDto) {
         return SIGN_UP;
     }
 
-    @PostMapping("/registration")
+    @PostMapping("/signup")
     public String registerUser(@ModelAttribute("userInfo") @Valid UserRegistrationRequestDto userRegistrationRequestDto,
                                BindingResult bindingResult,
                                HttpServletResponse resp) {
