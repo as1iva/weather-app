@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.as1iva.dto.SessionDto;
-import org.as1iva.dto.UserRegistrationRequestDto;
+import org.as1iva.dto.request.UserRegistrationRequestDto;
 import org.as1iva.service.AuthService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;

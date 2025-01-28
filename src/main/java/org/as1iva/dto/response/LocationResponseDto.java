@@ -1,4 +1,4 @@
-package org.as1iva.dto;
+package org.as1iva.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +10,9 @@ import java.math.BigDecimal;
 @Getter
 @Builder
 @AllArgsConstructor
-public class LocationRequestDto {
+public class LocationResponseDto {
+
+    private final Long id;
 
     private final String name;
 

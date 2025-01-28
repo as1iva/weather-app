@@ -1,8 +1,8 @@
 package org.as1iva.service;
 
 import lombok.RequiredArgsConstructor;
-import org.as1iva.dto.LocationRequestDto;
-import org.as1iva.dto.LocationResponseDto;
+import org.as1iva.dto.request.LocationRequestDto;
+import org.as1iva.dto.response.LocationResponseDto;
 import org.as1iva.entity.Location;
 import org.as1iva.entity.User;
 import org.as1iva.repository.LocationRepository;

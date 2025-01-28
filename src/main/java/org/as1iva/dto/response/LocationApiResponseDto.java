@@ -1,4 +1,4 @@
-package org.as1iva.dto;
+package org.as1iva.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,4 +1,4 @@
-package org.as1iva.dto;
+package org.as1iva.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

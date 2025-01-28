@@ -2,8 +2,8 @@ package org.as1iva.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
-import org.as1iva.dto.LocationResponseDto;
-import org.as1iva.dto.WeatherApiResponseDto;
+import org.as1iva.dto.response.LocationResponseDto;
+import org.as1iva.dto.response.WeatherApiResponseDto;
 import org.as1iva.entity.Session;
 import org.as1iva.service.AuthService;
 import org.as1iva.service.LocationService;
