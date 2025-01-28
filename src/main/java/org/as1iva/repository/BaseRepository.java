@@ -2,6 +2,7 @@ package org.as1iva.repository;
 
 import jakarta.persistence.criteria.CriteriaQuery;
 import lombok.RequiredArgsConstructor;
+import org.as1iva.exception.DataNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -52,7 +53,9 @@ public abstract class BaseRepository<K extends Serializable, E> implements CrudR
     @Override
     public void delete(K id) {
         Session session = sessionFactory.getCurrentSession();
-        E entity = findById(id).orElseThrow(()-> new RuntimeException());
+        E entity = findById(id).orElseThrow(
+                () -> new DataNotFoundException(String.format("%s was not found", entityClass.getSimpleName()))
+        );
 
         session.remove(entity);
     }
