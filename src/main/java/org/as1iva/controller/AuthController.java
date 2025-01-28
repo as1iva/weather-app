@@ -2,16 +2,14 @@ package org.as1iva.controller;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.as1iva.dto.SessionDto;
-import org.as1iva.entity.User;
+import org.as1iva.dto.UserRegistrationRequestDto;
 import org.as1iva.service.AuthService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -48,33 +46,23 @@ public class AuthController {
     }
 
     @PostMapping("/registration")
-    public String registerUser(@RequestParam(name = "username") String login,
-                               @RequestParam(name = "password") String password,
-                               @RequestParam(name = "repeat-password") String repeatPassword,
-                               HttpServletResponse resp,
-                               Model model) {
+    public String registerUser(@ModelAttribute("userInfo") @Valid UserRegistrationRequestDto userRegistrationRequestDto,
+                               BindingResult bindingResult,
+                               HttpServletResponse resp) {
 
-        model.addAttribute("username", login);
+        String login = userRegistrationRequestDto.getLogin();
+        String password = userRegistrationRequestDto.getPassword();
+        String repeatPassword = userRegistrationRequestDto.getRepeatPassword();
 
         if (!password.equals(repeatPassword)) {
-            String error = "Password doesn't match";
-            model.addAttribute("messageError", error);
-        }
-
-        if (password.length() < 3) {
-            String error = "Password should be longer than 3";
-            model.addAttribute("passwordError", error);
+            bindingResult.rejectValue("repeatPassword", "error.repeatPassword", "Passwords doesn't match");
         }
 
         if (authService.findUserByLogin(login).isPresent()) {
-            String error = "This user already exists";
-            model.addAttribute("usernameError", error);
+            bindingResult.rejectValue("login", "error.login", "This user already exists");
         }
 
-        if (model.containsAttribute("messageError")
-                || model.containsAttribute("passwordError")
-                || model.containsAttribute("usernameError")) {
-
+        if (bindingResult.hasErrors()) {
             return SIGN_UP;
         }
 
