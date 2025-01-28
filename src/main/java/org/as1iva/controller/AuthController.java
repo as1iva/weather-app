@@ -43,7 +43,7 @@ public class AuthController {
     }
 
     @GetMapping("/registration")
-    public String signUp() {
+    public String signUp(@ModelAttribute("userInfo") UserRegistrationRequestDto userRegistrationRequestDto) {
         return SIGN_UP;
     }
 
