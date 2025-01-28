@@ -16,7 +16,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserAuthenticationFailedException.class)
     public String handleUserAuthenticationFailedException(UserAuthenticationFailedException e, Model model) {
+
         model.addAttribute("error", e.getMessage());
+
         return SIGN_IN;
     }
 
