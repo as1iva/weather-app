@@ -2,7 +2,6 @@ package org.as1iva.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
-import org.as1iva.entity.Session;
 import org.as1iva.dto.request.LocationRequestDto;
 import org.as1iva.dto.response.LocationApiResponseDto;
 import org.as1iva.entity.User;
