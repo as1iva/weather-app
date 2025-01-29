@@ -49,7 +49,7 @@ public class LocationService {
         List<Location> locations = locationRepository.findAllByUserId(user);
 
         for (Location location : locations) {
-            locationResponseDtos.add(LocationResponseDto.builder()
+            locationResponses.add(LocationResponseDto.builder()
                     .id(location.getId())
                     .name(location.getName())
                     .userId(location.getUserId())
@@ -58,6 +58,6 @@ public class LocationService {
                     .build());
         }
 
-        return locationResponseDtos;
+        return locationResponses;
     }
 }
