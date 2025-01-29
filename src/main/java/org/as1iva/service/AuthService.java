@@ -2,8 +2,10 @@ package org.as1iva.service;
 
 import lombok.RequiredArgsConstructor;
 import org.as1iva.dto.SessionDto;
+import org.as1iva.dto.UserDto;
 import org.as1iva.entity.Session;
 import org.as1iva.entity.User;
+import org.as1iva.exception.DataNotFoundException;
 import org.as1iva.exception.UserAuthenticationFailedException;
 import org.as1iva.repository.SessionRepository;
 import org.as1iva.repository.UserRepository;
@@ -73,6 +75,16 @@ public class AuthService {
         return SessionDto.builder()
                 .id(session.getId())
                 .expiresAt(session.getExpiresAt())
+                .build();
+    }
+
+    public UserDto getUserBySession(String sessionId) {
+        Session session = sessionRepository.findById(sessionId)
+                .orElseThrow(() -> new DataNotFoundException("Session was not found"));
+
+        return UserDto.builder()
+                .id(session.getUserId().getId())
+                .login(session.getUserId().getLogin())
                 .build();
     }
 
