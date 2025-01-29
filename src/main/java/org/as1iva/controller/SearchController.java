@@ -54,15 +54,13 @@ public class SearchController {
                               @RequestParam(name = "lon") BigDecimal lon,
                               @CookieValue(name = "sessionId", required = false) String sessionId) {
 
-        User user = authService.getSession(sessionId).get().getUserId();
-
         LocationRequestDto locationRequestDto = LocationRequestDto.builder()
                 .name(name)
                 .latitude(lat)
                 .longitude(lon)
                 .build();
 
-        locationService.add(locationRequestDto);
+        locationService.add(locationRequestDto, sessionId);
 
         return REDIRECT_TO_INDEX;
     }

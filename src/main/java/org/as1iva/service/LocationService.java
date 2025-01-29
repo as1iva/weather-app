@@ -17,12 +17,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LocationService {
 
+    private final AuthService authService;
+
     private final LocationRepository locationRepository;
 
-    public void add(LocationRequestDto locationRequestDto) {
+    public void add(LocationRequestDto locationRequestDto, String sessionId) {
+        User user = authService.getSession(sessionId).get().getUserId();
+
         Location location = Location.builder()
                 .name(locationRequestDto.getName())
-                .userId(locationRequestDto.getUserId())
+                .userId(user)
                 .latitude(locationRequestDto.getLatitude())
                 .longitude(locationRequestDto.getLongitude())
                 .build();
