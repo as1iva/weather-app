@@ -5,6 +5,7 @@ import org.as1iva.dto.UserDto;
 import org.as1iva.dto.request.LocationRequestDto;
 import org.as1iva.dto.response.LocationResponseDto;
 import org.as1iva.entity.Location;
+import org.as1iva.entity.Session;
 import org.as1iva.entity.User;
 import org.as1iva.exception.DataNotFoundException;
 import org.as1iva.repository.LocationRepository;
@@ -27,11 +28,13 @@ public class LocationService {
     private final UserRepository userRepository;
 
     public void add(LocationRequestDto locationRequestDto, String sessionId) {
-        User user = authService.getSession(sessionId).get().getUserId();
+
+        Session session = authService.getSession(sessionId)
+                .orElseThrow(() -> new DataNotFoundException("Session was not found"));
 
         Location location = Location.builder()
                 .name(locationRequestDto.getName())
-                .userId(user)
+                .userId(session.getUserId())
                 .latitude(locationRequestDto.getLatitude())
                 .longitude(locationRequestDto.getLongitude())
                 .build();
