@@ -58,7 +58,6 @@ public class SearchController {
 
         LocationRequestDto locationRequestDto = LocationRequestDto.builder()
                 .name(name)
-                .userId(user)
                 .latitude(lat)
                 .longitude(lon)
                 .build();
