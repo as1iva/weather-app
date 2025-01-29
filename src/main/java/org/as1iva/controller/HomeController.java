@@ -2,9 +2,9 @@ package org.as1iva.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
+import org.as1iva.dto.UserDto;
 import org.as1iva.dto.response.LocationResponseDto;
 import org.as1iva.dto.response.WeatherApiResponseDto;
-import org.as1iva.entity.Session;
 import org.as1iva.service.AuthService;
 import org.as1iva.service.LocationService;
 import org.as1iva.service.WeatherApiService;
@@ -32,12 +32,11 @@ public class HomeController {
     public String home(@CookieValue(name = "sessionId", required = false) String sessionId,
                        Model model) throws JsonProcessingException {
 
-        Session session = authService.getSession(sessionId).get();
-        model.addAttribute("username", session.getUserId().getLogin());
+        UserDto user = authService.getUserBySession(sessionId);
 
-        List<LocationResponseDto> locations = locationService.getAllByUserId(session.getUserId());
+        List<LocationResponseDto> locations = locationService.getAllByUserId(user);
 
-        List<WeatherApiResponseDto> weatherApiResponseDtos = new ArrayList<>();
+        List<WeatherApiResponseDto> weatherApiResponses = new ArrayList<>();
 
         for (LocationResponseDto location : locations) {
             WeatherApiResponseDto weather = weatherApiService.getWeatherByCoordinates(location);
@@ -46,6 +45,7 @@ public class HomeController {
         }
 
         model.addAttribute(weatherApiResponseDtos);
+        model.addAttribute("username", user.getLogin());
 
         return INDEX;
     }
