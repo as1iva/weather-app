@@ -41,11 +41,11 @@ public class HomeController {
         for (LocationResponseDto location : locations) {
             WeatherApiResponseDto weather = weatherApiService.getWeatherByCoordinates(location);
 
-            weatherApiResponseDtos.add(weather);
+            weatherApiResponses.add(weather);
         }
 
-        model.addAttribute(weatherApiResponseDtos);
         model.addAttribute("username", user.getLogin());
+        model.addAttribute(weatherApiResponses);
 
         return INDEX;
     }
