@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class SessionDto {
 
-    private String id;
+    private final String id;
 
-    private LocalDateTime expiresAt;
+    private final LocalDateTime expiresAt;
 }
