@@ -12,13 +12,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
+
+    private static final String REDIRECT_TO_INDEX = "redirect:/";
 
     private static final String INDEX = "index";
 
@@ -48,5 +53,17 @@ public class HomeController {
         model.addAttribute(weatherApiResponses);
 
         return INDEX;
+    }
+
+    @PostMapping("/location/delete")
+    public String deleteLocation(@CookieValue(name = "sessionId", required = false) String sessionId,
+                                 @RequestParam("lat") BigDecimal lat,
+                                 @RequestParam("lon") BigDecimal lon) {
+
+        UserDto user = authService.getUserBySession(sessionId);
+
+        locationService.delete(user, lat, lon);
+
+        return REDIRECT_TO_INDEX;
     }
 }
