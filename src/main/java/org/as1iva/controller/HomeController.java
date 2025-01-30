@@ -30,7 +30,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(@CookieValue(name = "sessionId", required = false) String sessionId,
-                       Model model) throws JsonProcessingException {
+                       Model model) {
 
         UserDto user = authService.getUserBySession(sessionId);
 

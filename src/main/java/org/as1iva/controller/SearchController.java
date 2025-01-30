@@ -36,7 +36,7 @@ public class SearchController {
     @GetMapping("/search")
     public String searchLocation(@RequestParam(name = "name") String name,
                                  @CookieValue(name = "sessionId", required = false) String sessionId,
-                                 Model model) throws JsonProcessingException {
+                                 Model model) {
 
         UserDto user = authService.getUserBySession(sessionId);
 
