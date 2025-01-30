@@ -45,9 +45,15 @@
             <div class="row">
                 <div th:each="weather : ${weatherApiResponseDtoList}" class="col-12 col-lg-3 col-md-6 mb-4">
                     <div class="card h-100 position-relative weather-card">
-                        <div class="position-absolute weather-card-delete-form">
-                            <button class="btn-close" aria-label="Delete"></button>
-                        </div>
+                        <form th:action="@{/location/delete}" method="post">
+                            <div class="position-absolute weather-card-delete-form">
+                                <button type="submit" class="btn-close" aria-label="Delete"></button>
+                            </div>
+
+                            <input type="hidden" name="lat" th:value="${weather.coord.getLat()}">
+                            <input type="hidden" name="lon" th:value="${weather.coord.getLon()}">
+                        </form>
+
                         <img class="card-img-top img-fluid"
                              src="https://openweathermap.org/img/wn/01n@4x.png"
                              alt="Weather icon">
