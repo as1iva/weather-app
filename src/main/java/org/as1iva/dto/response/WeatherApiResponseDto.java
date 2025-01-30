@@ -68,7 +68,7 @@ public class WeatherApiResponseDto {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class WindDto {
 
-        private Double speed;
+        private BigDecimal speed;
     }
 
     @Getter
