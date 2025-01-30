@@ -1,5 +1,6 @@
 package org.as1iva.handler;
 
+import org.as1iva.exception.ApiRequestFailedException;
 import org.as1iva.exception.DataNotFoundException;
 import org.as1iva.exception.UserAuthenticationFailedException;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,16 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DataNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String handleDataNotFoundException(DataNotFoundException e, Model model) {
+
+        model.addAttribute("error", e.getMessage());
+        model.addAttribute("statusCode", HttpStatus.NOT_FOUND.value());
+
+        return ERROR;
+    }
+
+    @ExceptionHandler(ApiRequestFailedException.class)
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+    public String handleApiRequestFailedException(ApiRequestFailedException e, Model model) {
 
         model.addAttribute("error", e.getMessage());
         model.addAttribute("statusCode", HttpStatus.NOT_FOUND.value());
