@@ -13,6 +13,7 @@ import org.as1iva.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,5 +63,13 @@ public class LocationService {
         }
 
         return locationResponses;
+    }
+
+    public void delete(UserDto userDto, BigDecimal lat, BigDecimal lon) {
+
+        User user = userRepository.findByLogin(userDto.getLogin())
+                .orElseThrow(() -> new DataNotFoundException("User was not found"));
+
+        locationRepository.deleteByCoordinates(user, lat, lon);
     }
 }
