@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -12,6 +13,8 @@ import java.util.List;
 public class WeatherApiResponseDto {
 
     private String name;
+
+    private CoordinatesDto coord;
 
     private List<WeatherDto> weather;
 
@@ -24,6 +27,15 @@ public class WeatherApiResponseDto {
     private CloudsDto clouds;
 
     private SysDto sys;
+
+    @Getter
+    @Setter
+    public static class CoordinatesDto {
+
+        private BigDecimal lat;
+
+        private BigDecimal lon;
+    }
 
     @Getter
     @Setter
