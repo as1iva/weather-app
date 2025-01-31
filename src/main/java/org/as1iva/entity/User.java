@@ -1,6 +1,5 @@
 package org.as1iva.entity;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 
