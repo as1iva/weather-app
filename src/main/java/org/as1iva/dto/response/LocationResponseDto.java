@@ -16,6 +16,8 @@ public class LocationResponseDto {
 
     private final String name;
 
+    private final String state;
+
     private final User userId;
 
     private final BigDecimal latitude;
