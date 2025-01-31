@@ -14,6 +14,8 @@ public class WeatherApiResponseDto {
 
     private String name;
 
+    private String state;
+
     private CoordinatesDto coord;
 
     private List<WeatherDto> weather;
