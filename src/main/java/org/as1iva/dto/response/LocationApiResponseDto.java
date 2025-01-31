@@ -18,6 +18,9 @@ public class LocationApiResponseDto {
     @JsonProperty("country")
     private String country;
 
+    @JsonProperty("state")
+    private String state;
+
     @JsonProperty("lat")
     private BigDecimal latitude;
 
