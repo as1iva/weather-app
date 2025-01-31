@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class LocationRepository extends BaseRepository<Long, Location> {
@@ -24,6 +25,16 @@ public class LocationRepository extends BaseRepository<Long, Location> {
         return session.createQuery("FROM Location l WHERE l.userId = :userId", Location.class)
                 .setParameter("userId", userId)
                 .getResultList();
+    }
+
+    public Optional<Location> findByCoordinates(User userId, BigDecimal lat, BigDecimal lon) {
+        Session session = sessionFactory.getCurrentSession();
+
+        return session.createQuery("FROM Location l WHERE l.userId = :userId AND l.latitude = :lat AND l.longitude = :lon", Location.class)
+                .setParameter("userId", userId)
+                .setParameter("lat", lat)
+                .setParameter("lon", lon)
+                .uniqueResultOptional();
     }
 
     public void deleteByCoordinates(User userId, BigDecimal lat, BigDecimal lon) {
