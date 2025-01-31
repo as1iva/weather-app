@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
     public String handleApiRequestFailedException(ApiRequestFailedException e, Model model) {
 
         model.addAttribute("error", e.getMessage());
-        model.addAttribute("statusCode", HttpStatus.NOT_FOUND.value());
+        model.addAttribute("statusCode", HttpStatus.SERVICE_UNAVAILABLE.value());
 
         return ERROR;
     }
