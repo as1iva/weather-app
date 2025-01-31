@@ -5,6 +5,7 @@ import org.as1iva.dto.UserDto;
 import org.as1iva.dto.request.LocationRequestDto;
 import org.as1iva.dto.response.LocationApiResponseDto;
 import org.as1iva.dto.response.LocationResponseDto;
+import org.as1iva.dto.response.WeatherApiResponseDto;
 import org.as1iva.entity.Location;
 import org.as1iva.entity.Session;
 import org.as1iva.entity.User;
@@ -48,7 +49,25 @@ public class LocationService {
         locationRepository.save(location);
     }
 
-    public List<LocationResponseDto> getAllByUserId(UserDto userDto) {
+    public List<WeatherApiResponseDto> getWeatherForUserLocations(UserDto user) {
+
+        List<LocationResponseDto> locations = getAllByUserId(user);
+
+        List<WeatherApiResponseDto> weatherApiResponses = new ArrayList<>();
+
+        for (LocationResponseDto location : locations) {
+            WeatherApiResponseDto weather = weatherApiService.getWeatherByCoordinates(location);
+
+            String state = getStateByCoordinates(location).orElse("N/A");
+
+            weather.setState(state);
+
+            weatherApiResponses.add(weather);
+        }
+
+        return weatherApiResponses;
+    }
+
     private Optional<String> getStateByCoordinates(LocationResponseDto location) {
 
         List<LocationApiResponseDto> apiLocations = weatherApiService.getLocations(location.getName());

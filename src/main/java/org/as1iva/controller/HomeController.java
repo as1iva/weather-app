@@ -1,13 +1,10 @@
 package org.as1iva.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.as1iva.dto.UserDto;
-import org.as1iva.dto.response.LocationResponseDto;
 import org.as1iva.dto.response.WeatherApiResponseDto;
 import org.as1iva.service.AuthService;
 import org.as1iva.service.LocationService;
-import org.as1iva.service.WeatherApiService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -31,23 +27,13 @@ public class HomeController {
 
     private final LocationService locationService;
 
-    private final WeatherApiService weatherApiService;
-
     @GetMapping("/")
     public String home(@CookieValue(name = "sessionId", required = false) String sessionId,
                        Model model) {
 
         UserDto user = authService.getUserBySession(sessionId);
 
-        List<LocationResponseDto> locations = locationService.getAllByUserId(user);
-
-        List<WeatherApiResponseDto> weatherApiResponses = new ArrayList<>();
-
-        for (LocationResponseDto location : locations) {
-            WeatherApiResponseDto weather = weatherApiService.getWeatherByCoordinates(location);
-
-            weatherApiResponses.add(weather);
-        }
+        List<WeatherApiResponseDto> weatherApiResponses = locationService.getWeatherForUserLocations(user);
 
         model.addAttribute("username", user.getLogin());
         model.addAttribute(weatherApiResponses);
