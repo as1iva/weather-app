@@ -10,6 +10,7 @@ import org.as1iva.entity.Location;
 import org.as1iva.entity.Session;
 import org.as1iva.entity.User;
 import org.as1iva.exception.DataNotFoundException;
+import org.as1iva.exception.DuplicateLocationException;
 import org.as1iva.repository.LocationRepository;
 import org.as1iva.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -39,11 +40,21 @@ public class LocationService {
         Session session = authService.getSession(sessionId)
                 .orElseThrow(() -> new DataNotFoundException("Session was not found"));
 
+        User user = session.getUserId();
+        BigDecimal lat = locationRequestDto.getLatitude().setScale(4, RoundingMode.HALF_UP);
+        BigDecimal lon = locationRequestDto.getLongitude().setScale(4, RoundingMode.HALF_UP);
+
+        Optional<Location> locationOptional = locationRepository.findByCoordinates(user, lat, lon);
+
+        if (locationOptional.isPresent()) {
+            throw new DuplicateLocationException("Location already exists");
+        }
+
         Location location = Location.builder()
                 .name(locationRequestDto.getName())
-                .userId(session.getUserId())
-                .latitude(locationRequestDto.getLatitude())
-                .longitude(locationRequestDto.getLongitude())
+                .userId(user)
+                .latitude(lat)
+                .longitude(lon)
                 .build();
 
         locationRepository.save(location);
