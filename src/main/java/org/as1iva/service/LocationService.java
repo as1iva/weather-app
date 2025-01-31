@@ -3,6 +3,7 @@ package org.as1iva.service;
 import lombok.RequiredArgsConstructor;
 import org.as1iva.dto.UserDto;
 import org.as1iva.dto.request.LocationRequestDto;
+import org.as1iva.dto.response.LocationApiResponseDto;
 import org.as1iva.dto.response.LocationResponseDto;
 import org.as1iva.entity.Location;
 import org.as1iva.entity.Session;
@@ -14,8 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -23,6 +26,8 @@ import java.util.List;
 public class LocationService {
 
     private final AuthService authService;
+
+    private final WeatherApiService weatherApiService;
 
     private final LocationRepository locationRepository;
 
@@ -44,6 +49,24 @@ public class LocationService {
     }
 
     public List<LocationResponseDto> getAllByUserId(UserDto userDto) {
+    private Optional<String> getStateByCoordinates(LocationResponseDto location) {
+
+        List<LocationApiResponseDto> apiLocations = weatherApiService.getLocations(location.getName());
+
+        for (LocationApiResponseDto apiLocation: apiLocations) {
+
+            BigDecimal roundedLat = apiLocation.getLatitude().setScale(4, RoundingMode.HALF_UP);
+            BigDecimal roundedLon = apiLocation.getLongitude().setScale(4, RoundingMode.HALF_UP);
+
+            if (roundedLat.equals(location.getLatitude()) && roundedLon.equals(location.getLongitude())) {
+                return Optional.of(apiLocation.getState());
+            }
+        }
+
+        return Optional.empty();
+    }
+
+    private List<LocationResponseDto> getAllByUserId(UserDto userDto) {
 
         User user = userRepository.findByLogin(userDto.getLogin())
                 .orElseThrow(() -> new DataNotFoundException("User was not found"));
