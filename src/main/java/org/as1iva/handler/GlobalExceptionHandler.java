@@ -2,6 +2,7 @@ package org.as1iva.handler;
 
 import org.as1iva.exception.ApiRequestFailedException;
 import org.as1iva.exception.DataNotFoundException;
+import org.as1iva.exception.DuplicateLocationException;
 import org.as1iva.exception.UserAuthenticationFailedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
@@ -39,6 +40,16 @@ public class GlobalExceptionHandler {
 
         model.addAttribute("error", e.getMessage());
         model.addAttribute("statusCode", HttpStatus.NOT_FOUND.value());
+
+        return ERROR;
+    }
+
+    @ExceptionHandler(DuplicateLocationException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String handleDuplicateLocationException(DuplicateLocationException e, Model model) {
+
+        model.addAttribute("error", e.getMessage());
+        model.addAttribute("statusCode", HttpStatus.CONFLICT.value());
 
         return ERROR;
     }
