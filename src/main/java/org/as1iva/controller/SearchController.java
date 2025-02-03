@@ -6,7 +6,6 @@ import org.as1iva.dto.request.LocationRequestDto;
 import org.as1iva.dto.response.LocationApiResponseDto;
 import org.as1iva.service.AuthService;
 import org.as1iva.service.LocationService;
-import org.as1iva.service.WeatherApiService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -27,8 +26,6 @@ public class SearchController {
 
     private final LocationService locationService;
 
-    private final WeatherApiService weatherApiService;
-
     private final AuthService authService;
 
     @GetMapping("/search")
@@ -38,7 +35,7 @@ public class SearchController {
 
         UserDto user = authService.getUserBySession(sessionId);
 
-        List<LocationApiResponseDto> locations = weatherApiService.getLocations(name);
+        List<LocationApiResponseDto> locations = locationService.getAvailable(user, name);
 
         model.addAttribute("name", name);
         model.addAttribute("username", user.getLogin());
