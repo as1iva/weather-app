@@ -60,7 +60,7 @@ public class LocationService {
         locationRepository.save(location);
     }
 
-    public List<WeatherApiResponseDto> getWeatherForUserLocations(UserDto user) {
+    public List<WeatherApiResponseDto> getWeather(UserDto user) {
 
         List<LocationResponseDto> locations = getAllByUserId(user);
 

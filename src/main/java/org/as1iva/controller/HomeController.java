@@ -33,7 +33,7 @@ public class HomeController {
 
         UserDto user = authService.getUserBySession(sessionId);
 
-        List<WeatherApiResponseDto> weatherApiResponses = locationService.getWeatherForUserLocations(user);
+        List<WeatherApiResponseDto> weatherApiResponses = locationService.getWeather(user);
 
         model.addAttribute("username", user.getLogin());
         model.addAttribute(weatherApiResponses);
