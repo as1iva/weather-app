@@ -60,6 +60,39 @@ public class LocationService {
         locationRepository.save(location);
     }
 
+    public List<LocationApiResponseDto> getAvailable(UserDto userDto, String name) {
+
+        User user = userRepository.findByLogin(userDto.getLogin())
+                .orElseThrow(() -> new DataNotFoundException("User was not found"));
+
+        List<LocationApiResponseDto> apiLocations = weatherApiService.getLocations(name);
+
+        List<Location> locations = locationRepository.findAllByUserId(user);
+
+        List<LocationApiResponseDto> locationsToDelete = new ArrayList<>();
+
+        for (Location location : locations) {
+
+            BigDecimal lat = location.getLatitude().setScale(4, RoundingMode.HALF_UP);
+            BigDecimal lon = location.getLongitude().setScale(4, RoundingMode.HALF_UP);
+
+            for (LocationApiResponseDto locationApiResponseDto : apiLocations) {
+
+                BigDecimal latDto = locationApiResponseDto.getLatitude().setScale(4, RoundingMode.HALF_UP);
+                BigDecimal lonDto = locationApiResponseDto.getLongitude().setScale(4, RoundingMode.HALF_UP);
+
+                if (lat.equals(latDto) && lon.equals(lonDto)) {
+                    locationsToDelete.add(locationApiResponseDto);
+                    break;
+                }
+            }
+        }
+
+        apiLocations.removeAll(locationsToDelete);
+
+        return apiLocations;
+    }
+
     public List<WeatherApiResponseDto> getWeather(UserDto user) {
 
         List<LocationResponseDto> locations = getAllByUserId(user);
