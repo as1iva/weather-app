@@ -55,8 +55,9 @@
                         </form>
 
                         <img class="card-img-top img-fluid"
-                             src="https://openweathermap.org/img/wn/01n@4x.png"
+                             th:src="'https://openweathermap.org/img/wn/' + ${weather.weather[0].icon} + '@4x.png'"
                              alt="Weather icon">
+
                         <div class="card-body d-flex flex-column">
                             <h1 class="card-text" th:text="${weather.main.temp} + '°C'"></h1>
 
