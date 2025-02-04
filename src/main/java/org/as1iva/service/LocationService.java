@@ -72,13 +72,13 @@ public class LocationService {
         List<LocationApiResponseDto> locationsToDelete = new ArrayList<>();
 
         for (Location location : locations) {
-            for (LocationApiResponseDto locationApiResponseDto : apiLocations) {
+            for (LocationApiResponseDto apiLocation : apiLocations) {
 
-                BigDecimal roundedLat = locationApiResponseDto.getLatitude().setScale(4, RoundingMode.HALF_UP);
-                BigDecimal roundedLon = locationApiResponseDto.getLongitude().setScale(4, RoundingMode.HALF_UP);
+                BigDecimal roundedLat = apiLocation.getLatitude().setScale(4, RoundingMode.HALF_UP);
+                BigDecimal roundedLon = apiLocation.getLongitude().setScale(4, RoundingMode.HALF_UP);
 
                 if (location.getLatitude().equals(roundedLat) && location.getLongitude().equals(roundedLon)) {
-                    locationsToDelete.add(locationApiResponseDto);
+                    locationsToDelete.add(apiLocation);
                     break;
                 }
             }
