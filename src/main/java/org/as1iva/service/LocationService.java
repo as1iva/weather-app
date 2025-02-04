@@ -72,10 +72,6 @@ public class LocationService {
         List<LocationApiResponseDto> locationsToDelete = new ArrayList<>();
 
         for (Location location : locations) {
-
-            BigDecimal lat = location.getLatitude().setScale(4, RoundingMode.HALF_UP);
-            BigDecimal lon = location.getLongitude().setScale(4, RoundingMode.HALF_UP);
-
             for (LocationApiResponseDto locationApiResponseDto : apiLocations) {
 
                 BigDecimal latDto = locationApiResponseDto.getLatitude().setScale(4, RoundingMode.HALF_UP);
