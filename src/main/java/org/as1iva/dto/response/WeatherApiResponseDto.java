@@ -84,7 +84,7 @@ public class WeatherApiResponseDto {
     @Getter
     @Setter
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static  class SysDto {
+    public static class SysDto {
 
         private String country;
 
