@@ -101,6 +101,7 @@ public class LocationService {
             String state = getStateByCoordinates(location).orElse("N/A");
 
             weather.setState(state);
+            weather.setName(location.getName());
 
             weatherApiResponses.add(weather);
         }
