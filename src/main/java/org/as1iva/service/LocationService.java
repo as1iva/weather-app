@@ -74,10 +74,10 @@ public class LocationService {
         for (Location location : locations) {
             for (LocationApiResponseDto locationApiResponseDto : apiLocations) {
 
-                BigDecimal latDto = locationApiResponseDto.getLatitude().setScale(4, RoundingMode.HALF_UP);
-                BigDecimal lonDto = locationApiResponseDto.getLongitude().setScale(4, RoundingMode.HALF_UP);
+                BigDecimal roundedLat = locationApiResponseDto.getLatitude().setScale(4, RoundingMode.HALF_UP);
+                BigDecimal roundedLon = locationApiResponseDto.getLongitude().setScale(4, RoundingMode.HALF_UP);
 
-                if (lat.equals(latDto) && lon.equals(lonDto)) {
+                if (location.getLatitude().equals(roundedLat) && location.getLongitude().equals(roundedLon)) {
                     locationsToDelete.add(locationApiResponseDto);
                     break;
                 }
