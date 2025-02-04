@@ -88,8 +88,8 @@ public class WeatherApiResponseDto {
 
         private String country;
 
-        private Integer sunrise;
+        private Long sunrise;
 
-        private Integer sunset;
+        private Long sunset;
     }
 }
