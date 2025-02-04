@@ -63,9 +63,21 @@
 
                             <h3 class="card-title" th:text="${weather.name} + ', ' + ${weather.sys.country}"></h3>
 
-                            <p class="card-text mb-1" th:text="'Feels like ' + ${weather.main.feels_like} + '°C'"></p>
+                            <h6 class="card-text mb-1" th:text="${weather.state}"></h6>
 
-                            <p class="card-text mb-1" th:text="${weather.weather[0].description}"></p>
+                            <p class="card-text mb-1" th:text="'Feels like ' + ${weather.main.feels_like} + '°C. ' + ${#strings.capitalize(weather.weather[0].description)}"></p>
+
+                            <p class="card-text mb-2"></p>
+
+                            <p class="card-text mb-1" th:text="'Humidity: ' + ${weather.main.humidity} + '%'"></p>
+
+                            <p class="card-text mb-1" th:text="'Wind speed: ' + ${weather.wind.speed} + ' m/s'"></p>
+
+                            <p class="card-text mb-2"></p>
+
+                            <p class="card-text mb-1" th:text="'Sunrise: ' + ${#dates.format(weather.sys.sunrise * 1000, 'HH:mm')}"></p>
+
+                            <p class="card-text mb-1" th:text="'Sunset: ' + ${#dates.format(weather.sys.sunset * 1000, 'HH:mm')}"></p>
                         </div>
                     </div>
                 </div>
