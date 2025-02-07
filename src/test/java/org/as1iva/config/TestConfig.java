@@ -1,8 +1,5 @@
 package org.as1iva.config;
 
-import org.as1iva.interceptor.AuthUserValidationInterceptor;
-import org.as1iva.interceptor.NotAuthUserValidationInterceptor;
-import org.as1iva.interceptor.SessionValidationInterceptor;
 import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
@@ -13,7 +10,6 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -27,26 +23,14 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class TestConfig implements WebMvcConfigurer {
 
-    private final NotAuthUserValidationInterceptor notAuthUserValidationInterceptor;
-
-    private final AuthUserValidationInterceptor authUserValidationInterceptor;
-
-    private final SessionValidationInterceptor sessionValidationInterceptor;
-
     private final WebApplicationContext webApplicationContext;
 
     private final Environment env;
 
     @Autowired
-    public TestConfig(@Lazy AuthUserValidationInterceptor authUserValidationInterceptor,
-                      @Lazy NotAuthUserValidationInterceptor notAuthUserValidationInterceptor,
-                      @Lazy SessionValidationInterceptor sessionValidationInterceptor,
-                      WebApplicationContext webApplicationContext,
+    public TestConfig(WebApplicationContext webApplicationContext,
                       Environment env) {
 
-        this.authUserValidationInterceptor = authUserValidationInterceptor;
-        this.notAuthUserValidationInterceptor = notAuthUserValidationInterceptor;
-        this.sessionValidationInterceptor = sessionValidationInterceptor;
         this.webApplicationContext = webApplicationContext;
         this.env = env;
     }
@@ -108,18 +92,5 @@ public class TestConfig implements WebMvcConfigurer {
         flyway.migrate();
 
         return flyway;
-    }
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(notAuthUserValidationInterceptor)
-                .addPathPatterns("/")
-                .excludePathPatterns("/login", "/registration");
-
-        registry.addInterceptor(authUserValidationInterceptor)
-                .addPathPatterns("/login", "/registration");
-
-        registry.addInterceptor(sessionValidationInterceptor)
-                .addPathPatterns("/");
     }
 }
