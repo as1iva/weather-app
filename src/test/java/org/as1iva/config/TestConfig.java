@@ -2,6 +2,7 @@ package org.as1iva.config;
 
 import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -9,7 +10,6 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -23,15 +23,15 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class TestConfig implements WebMvcConfigurer {
 
-    private final WebApplicationContext webApplicationContext;
+    private final ApplicationContext applicationContext;
 
     private final Environment env;
 
     @Autowired
-    public TestConfig(WebApplicationContext webApplicationContext,
+    public TestConfig(ApplicationContext applicationContext,
                       Environment env) {
 
-        this.webApplicationContext = webApplicationContext;
+        this.applicationContext = applicationContext;
         this.env = env;
     }
 
