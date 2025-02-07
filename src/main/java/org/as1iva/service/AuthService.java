@@ -6,6 +6,7 @@ import org.as1iva.dto.UserDto;
 import org.as1iva.entity.Session;
 import org.as1iva.entity.User;
 import org.as1iva.exception.DataNotFoundException;
+import org.as1iva.exception.ExpiredSessionException;
 import org.as1iva.exception.UserAuthenticationFailedException;
 import org.as1iva.repository.SessionRepository;
 import org.as1iva.repository.UserRepository;
@@ -81,6 +82,12 @@ public class AuthService {
     public UserDto getUserBySession(String sessionId) {
         Session session = sessionRepository.findById(sessionId)
                 .orElseThrow(() -> new DataNotFoundException("Session was not found"));
+
+        if (session.getExpiresAt().isBefore(LocalDateTime.now())) {
+            deleteSession(sessionId);
+
+            throw new ExpiredSessionException("Session expired");
+        }
 
         return UserDto.builder()
                 .id(session.getUserId().getId())
