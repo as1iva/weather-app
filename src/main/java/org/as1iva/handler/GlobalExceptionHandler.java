@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -50,6 +51,16 @@ public class GlobalExceptionHandler {
 
         model.addAttribute("error", e.getMessage());
         model.addAttribute("statusCode", HttpStatus.CONFLICT.value());
+
+        return ERROR;
+    }
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleNoHandlerFoundException(Model model) {
+
+        model.addAttribute("error", "Page not found");
+        model.addAttribute("statusCode", HttpStatus.NOT_FOUND.value());
 
         return ERROR;
     }
