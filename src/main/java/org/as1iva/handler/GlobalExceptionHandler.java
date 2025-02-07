@@ -4,6 +4,7 @@ import org.as1iva.exception.ApiRequestFailedException;
 import org.as1iva.exception.DataNotFoundException;
 import org.as1iva.exception.DuplicateLocationException;
 import org.as1iva.exception.UserAuthenticationFailedException;
+import org.as1iva.exception.ExpiredSessionException;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -71,6 +72,16 @@ public class GlobalExceptionHandler {
     public String handleHttpRequestMethodNotSupportedException(Model model) {
 
         model.addAttribute("error", "The method is not supported");
+        model.addAttribute("statusCode", HttpStatus.METHOD_NOT_ALLOWED.value());
+
+        return ERROR;
+    }
+
+    @ExceptionHandler(ExpiredSessionException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public String handleExpiredSessionException(ExpiredSessionException e, Model model) {
+
+        model.addAttribute("error", e.getMessage());
         model.addAttribute("statusCode", HttpStatus.METHOD_NOT_ALLOWED.value());
 
         return ERROR;
