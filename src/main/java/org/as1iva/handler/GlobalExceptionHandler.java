@@ -6,6 +6,7 @@ import org.as1iva.exception.DuplicateLocationException;
 import org.as1iva.exception.UserAuthenticationFailedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -61,6 +62,16 @@ public class GlobalExceptionHandler {
 
         model.addAttribute("error", "Page not found");
         model.addAttribute("statusCode", HttpStatus.NOT_FOUND.value());
+
+        return ERROR;
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    public String handleHttpRequestMethodNotSupportedException(Model model) {
+
+        model.addAttribute("error", "The method is not supported");
+        model.addAttribute("statusCode", HttpStatus.METHOD_NOT_ALLOWED.value());
 
         return ERROR;
     }
