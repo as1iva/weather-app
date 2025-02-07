@@ -86,12 +86,14 @@ public class AuthController {
     private void createCookie(SessionDto sessionDto, HttpServletResponse resp) {
         Cookie cookie = new Cookie("sessionId", sessionDto.getId());
         cookie.setAttribute("expires_at", sessionDto.getExpiresAt().toString());
+
         resp.addCookie(cookie);
     }
 
     private void deleteCookie(HttpServletResponse resp) {
         Cookie cookie = new Cookie("sessionId", null);
         cookie.setMaxAge(0);
+
         resp.addCookie(cookie);
     }
 }
