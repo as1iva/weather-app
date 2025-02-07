@@ -26,6 +26,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
+@Profile("dev")
 @ComponentScan("org.as1iva")
 @PropertySource("classpath:application.properties")
 @EnableTransactionManagement
