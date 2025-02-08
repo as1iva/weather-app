@@ -148,7 +148,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(notAuthUserValidationInterceptor)
-                .addPathPatterns("/")
+                .addPathPatterns("/**")
                 .excludePathPatterns("/login", "/signup");
 
         registry.addInterceptor(authUserValidationInterceptor)
