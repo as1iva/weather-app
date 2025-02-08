@@ -119,7 +119,7 @@ public class LocationService {
             BigDecimal roundedLon = apiLocation.getLongitude().setScale(4, RoundingMode.HALF_UP);
 
             if (roundedLat.equals(location.getLatitude()) && roundedLon.equals(location.getLongitude())) {
-                return Optional.of(apiLocation.getState());
+                return Optional.ofNullable(apiLocation.getState());
             }
         }
 
