@@ -2,7 +2,6 @@ package org.as1iva.config;
 
 import org.as1iva.interceptor.AuthUserValidationInterceptor;
 import org.as1iva.interceptor.NotAuthUserValidationInterceptor;
-import org.as1iva.interceptor.SessionValidationInterceptor;
 import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -37,8 +36,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     private final AuthUserValidationInterceptor authUserValidationInterceptor;
 
-    private final SessionValidationInterceptor sessionValidationInterceptor;
-
     private final ApplicationContext applicationContext;
 
     private final Environment env;
@@ -46,13 +43,11 @@ public class WebConfig implements WebMvcConfigurer {
     @Autowired
     public WebConfig(@Lazy AuthUserValidationInterceptor authUserValidationInterceptor,
                      @Lazy NotAuthUserValidationInterceptor notAuthUserValidationInterceptor,
-                     @Lazy SessionValidationInterceptor sessionValidationInterceptor,
                      ApplicationContext applicationContext,
                      Environment env) {
 
         this.authUserValidationInterceptor = authUserValidationInterceptor;
         this.notAuthUserValidationInterceptor = notAuthUserValidationInterceptor;
-        this.sessionValidationInterceptor = sessionValidationInterceptor;
         this.applicationContext = applicationContext;
         this.env = env;
     }
@@ -158,9 +153,6 @@ public class WebConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(authUserValidationInterceptor)
                 .addPathPatterns("/login", "/registration");
-
-        registry.addInterceptor(sessionValidationInterceptor)
-                .addPathPatterns("/");
     }
 
     @Bean
