@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@Transactional
+@Transactional(noRollbackFor = ExpiredSessionException.class)
 @RequiredArgsConstructor
 public class AuthService {
 
