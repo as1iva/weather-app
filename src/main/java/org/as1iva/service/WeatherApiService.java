@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.as1iva.dto.response.LocationApiResponseDto;
 import org.as1iva.dto.response.LocationResponseDto;
 import org.as1iva.dto.response.WeatherApiResponseDto;
-import org.as1iva.exception.ApiRequestFailedException;
+import org.as1iva.exception.api.JsonParsingApiException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +42,7 @@ public class WeatherApiService {
 
             return objectMapper.readValue(jsonResponse, new TypeReference<List<LocationApiResponseDto>>() {});
         } catch (JsonProcessingException e) {
-            throw new ApiRequestFailedException("Service unavailable");
+            throw new JsonParsingApiException("Service unavailable");
         }
     }
 
@@ -62,7 +62,7 @@ public class WeatherApiService {
 
             return objectMapper.readValue(jsonResponse, WeatherApiResponseDto.class);
         } catch (JsonProcessingException e) {
-            throw new ApiRequestFailedException("Service unavailable");
+            throw new JsonParsingApiException("Service unavailable");
         }
     }
 }
