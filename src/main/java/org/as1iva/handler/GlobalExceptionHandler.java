@@ -16,6 +16,8 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    private static final String REDIRECT_TO_LOGIN = "redirect:/login";
+
     private static final String SIGN_IN = "sign-in";
     private static final String ERROR = "error";
 
@@ -78,12 +80,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ExpiredSessionException.class)
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public String handleExpiredSessionException(ExpiredSessionException e, Model model) {
-
-        model.addAttribute("error", e.getMessage());
-        model.addAttribute("statusCode", HttpStatus.METHOD_NOT_ALLOWED.value());
-
-        return ERROR;
+    public String handleExpiredSessionException() {
+        return REDIRECT_TO_LOGIN;
     }
 }
