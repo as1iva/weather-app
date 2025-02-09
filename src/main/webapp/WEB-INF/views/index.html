@@ -41,43 +41,49 @@
             <button class="btn btn-outline-success">Search</button>
         </form>
 
+        <div th:if="${#lists.isEmpty(weatherApiResponseDtoList)}">
+            <p class="text-center">No locations added yet. Try searching for one!</p>
+        </div>
+
         <div>
-            <div class="row">
-                <div th:each="weather : ${weatherApiResponseDtoList}" class="col-12 col-lg-3 col-md-6 mb-4">
-                    <div class="card h-100 position-relative weather-card">
-                        <form th:action="@{/location/delete}" method="post">
-                            <div class="position-absolute weather-card-delete-form">
-                                <button type="submit" class="btn-close" aria-label="Delete"></button>
+            <div th:if="${!#lists.isEmpty(weatherApiResponseDtoList)}">
+                <div class="row">
+                    <div th:each="weather : ${weatherApiResponseDtoList}" class="col-12 col-lg-3 col-md-6 mb-4">
+                        <div class="card h-100 position-relative weather-card">
+                            <form th:action="@{/location/delete}" method="post">
+                                <div class="position-absolute weather-card-delete-form">
+                                    <button type="submit" class="btn-close" aria-label="Delete"></button>
+                                </div>
+
+                                <input type="hidden" name="lat" th:value="${weather.coord.getLat()}">
+                                <input type="hidden" name="lon" th:value="${weather.coord.getLon()}">
+                            </form>
+
+                            <img class="card-img-top img-fluid"
+                                 th:src="'https://openweathermap.org/img/wn/' + ${weather.weather[0].icon} + '@4x.png'"
+                                 alt="Weather icon">
+
+                            <div class="card-body d-flex flex-column">
+                                <h1 class="card-text" th:text="${weather.main.temp} + '°C'"></h1>
+
+                                <h3 class="card-title" th:text="${weather.name} + ', ' + ${weather.sys.country}"></h3>
+
+                                <h6 class="card-text mb-1" th:text="${weather.state}"></h6>
+
+                                <p class="card-text mb-1" th:text="'Feels like ' + ${weather.main.feels_like} + '°C. ' + ${#strings.capitalize(weather.weather[0].description)}"></p>
+
+                                <p class="card-text mb-2"></p>
+
+                                <p class="card-text mb-1" th:text="'Humidity: ' + ${weather.main.humidity} + '%'"></p>
+
+                                <p class="card-text mb-1" th:text="'Wind speed: ' + ${weather.wind.speed} + ' m/s'"></p>
+
+                                <p class="card-text mb-2"></p>
+
+                                <p class="card-text mb-1" th:text="'Sunrise: ' + ${#dates.format(weather.sys.sunrise * 1000, 'HH:mm')}"></p>
+
+                                <p class="card-text mb-1" th:text="'Sunset: ' + ${#dates.format(weather.sys.sunset * 1000, 'HH:mm')}"></p>
                             </div>
-
-                            <input type="hidden" name="lat" th:value="${weather.coord.getLat()}">
-                            <input type="hidden" name="lon" th:value="${weather.coord.getLon()}">
-                        </form>
-
-                        <img class="card-img-top img-fluid"
-                             th:src="'https://openweathermap.org/img/wn/' + ${weather.weather[0].icon} + '@4x.png'"
-                             alt="Weather icon">
-
-                        <div class="card-body d-flex flex-column">
-                            <h1 class="card-text" th:text="${weather.main.temp} + '°C'"></h1>
-
-                            <h3 class="card-title" th:text="${weather.name} + ', ' + ${weather.sys.country}"></h3>
-
-                            <h6 class="card-text mb-1" th:text="${weather.state}"></h6>
-
-                            <p class="card-text mb-1" th:text="'Feels like ' + ${weather.main.feels_like} + '°C. ' + ${#strings.capitalize(weather.weather[0].description)}"></p>
-
-                            <p class="card-text mb-2"></p>
-
-                            <p class="card-text mb-1" th:text="'Humidity: ' + ${weather.main.humidity} + '%'"></p>
-
-                            <p class="card-text mb-1" th:text="'Wind speed: ' + ${weather.wind.speed} + ' m/s'"></p>
-
-                            <p class="card-text mb-2"></p>
-
-                            <p class="card-text mb-1" th:text="'Sunrise: ' + ${#dates.format(weather.sys.sunrise * 1000, 'HH:mm')}"></p>
-
-                            <p class="card-text mb-1" th:text="'Sunset: ' + ${#dates.format(weather.sys.sunset * 1000, 'HH:mm')}"></p>
                         </div>
                     </div>
                 </div>
