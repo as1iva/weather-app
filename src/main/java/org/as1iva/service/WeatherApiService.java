@@ -32,6 +32,8 @@ public class WeatherApiService {
 
     public static final String SERVER_ERROR_MESSAGE = "Server unavailable. Please, try later";
 
+    public static final String JSON_ERROR_MESSAGE = "Service unavailable";
+
     @Value("${api.key}")
     private String apiKey;
 
@@ -54,7 +56,7 @@ public class WeatherApiService {
 
             return objectMapper.readValue(jsonResponse, new TypeReference<List<LocationApiResponseDto>>() {});
         } catch (JsonProcessingException e) {
-            throw new JsonParsingApiException("Service unavailable");
+            throw new JsonParsingApiException(JSON_ERROR_MESSAGE);
         }
     }
 
@@ -78,7 +80,7 @@ public class WeatherApiService {
 
             return objectMapper.readValue(jsonResponse, WeatherApiResponseDto.class);
         } catch (JsonProcessingException e) {
-            throw new JsonParsingApiException("Service unavailable");
+            throw new JsonParsingApiException(JSON_ERROR_MESSAGE);
         }
     }
 }
