@@ -1,5 +1,6 @@
 package org.as1iva.handler;
 
+import org.as1iva.exception.api.ClientApiException;
 import org.as1iva.exception.api.JsonParsingApiException;
 import org.as1iva.exception.DataNotFoundException;
 import org.as1iva.exception.DuplicateLocationException;
@@ -45,6 +46,16 @@ public class GlobalExceptionHandler {
 
         model.addAttribute("error", e.getMessage());
         model.addAttribute("statusCode", HttpStatus.SERVICE_UNAVAILABLE.value());
+
+        return ERROR;
+    }
+
+    @ExceptionHandler(ClientApiException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handleClientApiException(ClientApiException e, Model model) {
+
+        model.addAttribute("error", e.getMessage());
+        model.addAttribute("statusCode", HttpStatus.BAD_REQUEST.value());
 
         return ERROR;
     }
