@@ -6,6 +6,7 @@ import org.as1iva.exception.DataNotFoundException;
 import org.as1iva.exception.DuplicateLocationException;
 import org.as1iva.exception.UserAuthenticationFailedException;
 import org.as1iva.exception.ExpiredSessionException;
+import org.as1iva.exception.api.ServerApiException;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -56,6 +57,16 @@ public class GlobalExceptionHandler {
 
         model.addAttribute("error", e.getMessage());
         model.addAttribute("statusCode", HttpStatus.BAD_REQUEST.value());
+
+        return ERROR;
+    }
+
+    @ExceptionHandler(ServerApiException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String handleServerApiException(ServerApiException e, Model model) {
+
+        model.addAttribute("error", e.getMessage());
+        model.addAttribute("statusCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
 
         return ERROR;
     }
