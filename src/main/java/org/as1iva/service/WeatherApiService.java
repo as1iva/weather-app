@@ -11,9 +11,11 @@ import org.as1iva.exception.api.JsonParsingApiException;
 import org.as1iva.exception.api.ClientApiException;
 import org.as1iva.exception.api.ServerApiException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -25,6 +27,8 @@ public class WeatherApiService {
     private final WebClient webClient;
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
+
+    public static final String CLIENT_ERROR_MESSAGE = "Client error. Please, try again";
 
     @Value("${api.key}")
     private String apiKey;
@@ -39,6 +43,8 @@ public class WeatherApiService {
                             .queryParam("appId", apiKey)
                             .build())
                     .retrieve()
+                    .onStatus(HttpStatusCode::is4xxClientError, response ->
+                            Mono.error(new ClientApiException(CLIENT_ERROR_MESSAGE)))
                     .bodyToMono(String.class)
                     .block();
 
@@ -59,6 +65,8 @@ public class WeatherApiService {
                             .queryParam("appId", apiKey)
                             .build())
                     .retrieve()
+                    .onStatus(HttpStatusCode::is4xxClientError, response ->
+                            Mono.error(new ClientApiException(CLIENT_ERROR_MESSAGE)))
                     .bodyToMono(String.class)
                     .block();
 
