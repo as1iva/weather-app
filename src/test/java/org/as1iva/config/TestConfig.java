@@ -1,6 +1,7 @@
 package org.as1iva.config;
 
 import org.flywaydb.core.Flyway;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.*;
@@ -10,6 +11,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.reactive.function.client.ExchangeFunction;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -96,9 +98,15 @@ public class TestConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public WebClient webClient() {
+    public ExchangeFunction exchangeFunction() {
+        return Mockito.mock(ExchangeFunction.class);
+    }
+
+    @Bean
+    public WebClient webClient(ExchangeFunction exchangeFunction) {
         return WebClient.builder()
                 .baseUrl("http://api.fake")
+                .exchangeFunction(exchangeFunction)
                 .build();
     }
 }
