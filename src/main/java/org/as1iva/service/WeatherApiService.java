@@ -8,6 +8,8 @@ import org.as1iva.dto.response.LocationApiResponseDto;
 import org.as1iva.dto.response.LocationResponseDto;
 import org.as1iva.dto.response.WeatherApiResponseDto;
 import org.as1iva.exception.api.JsonParsingApiException;
+import org.as1iva.exception.api.ClientApiException;
+import org.as1iva.exception.api.ServerApiException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
