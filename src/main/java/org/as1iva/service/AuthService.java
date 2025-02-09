@@ -27,6 +27,8 @@ public class AuthService {
 
     private final UserRepository userRepository;
 
+    private static final int SESSION_DURATION_DAYS = 5;
+
     public boolean isPasswordCorrect(String password, User user) {
         return BCrypt.checkpw(password, user.getPassword());
     }
@@ -67,7 +69,7 @@ public class AuthService {
         Session session = Session.builder()
                 .id(sessionId)
                 .userId(user)
-                .expiresAt(time.plusDays(5))
+                .expiresAt(time.plusDays(SESSION_DURATION_DAYS))
                 .build();
 
         sessionRepository.save(session);
