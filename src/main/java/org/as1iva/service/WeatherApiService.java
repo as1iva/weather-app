@@ -30,6 +30,8 @@ public class WeatherApiService {
 
     public static final String CLIENT_ERROR_MESSAGE = "Client error. Please, try again";
 
+    public static final String SERVER_ERROR_MESSAGE = "Server unavailable. Please, try later";
+
     @Value("${api.key}")
     private String apiKey;
 
@@ -45,6 +47,8 @@ public class WeatherApiService {
                     .retrieve()
                     .onStatus(HttpStatusCode::is4xxClientError, response ->
                             Mono.error(new ClientApiException(CLIENT_ERROR_MESSAGE)))
+                    .onStatus(HttpStatusCode::is5xxServerError, response ->
+                            Mono.error(new ServerApiException(SERVER_ERROR_MESSAGE)))
                     .bodyToMono(String.class)
                     .block();
 
@@ -67,6 +71,8 @@ public class WeatherApiService {
                     .retrieve()
                     .onStatus(HttpStatusCode::is4xxClientError, response ->
                             Mono.error(new ClientApiException(CLIENT_ERROR_MESSAGE)))
+                    .onStatus(HttpStatusCode::is5xxServerError, response ->
+                            Mono.error(new ServerApiException(SERVER_ERROR_MESSAGE)))
                     .bodyToMono(String.class)
                     .block();
 
