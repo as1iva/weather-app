@@ -1,6 +1,7 @@
 package org.as1iva.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -60,7 +61,8 @@ public class WeatherApiResponseDto {
 
         private Integer temp;
 
-        private Integer feels_like;
+        @JsonProperty("feels_like")
+        private Integer feelsLike;
 
         private Integer humidity;
     }

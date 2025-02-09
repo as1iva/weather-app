@@ -70,7 +70,7 @@
 
                                 <h6 class="card-text mb-1" th:text="${weather.state}"></h6>
 
-                                <p class="card-text mb-1" th:text="'Feels like ' + ${weather.main.feels_like} + '°C. ' + ${#strings.capitalize(weather.weather[0].description)}"></p>
+                                <p class="card-text mb-1" th:text="'Feels like ' + ${weather.main.feelsLike} + '°C. ' + ${#strings.capitalize(weather.weather[0].description)}"></p>
 
                                 <p class="card-text mb-2"></p>
 
