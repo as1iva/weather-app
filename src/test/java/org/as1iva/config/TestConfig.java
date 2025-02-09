@@ -98,7 +98,7 @@ public class TestConfig implements WebMvcConfigurer {
     @Bean
     public WebClient webClient() {
         return WebClient.builder()
-                .baseUrl("http://api.openweathermap.org")
+                .baseUrl("http://api.fake")
                 .build();
     }
 }
