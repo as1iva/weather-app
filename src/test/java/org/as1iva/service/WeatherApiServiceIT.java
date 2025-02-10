@@ -51,8 +51,6 @@ public class WeatherApiServiceIT {
 
     @BeforeEach
     public void setup() {
-
-
         Mockito.reset(exchangeFunction);
     }
 
