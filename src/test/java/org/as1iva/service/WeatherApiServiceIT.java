@@ -5,6 +5,7 @@ import org.as1iva.dto.response.LocationApiResponseDto;
 import org.as1iva.dto.response.LocationResponseDto;
 import org.as1iva.dto.response.WeatherApiResponseDto;
 import org.as1iva.entity.User;
+import org.as1iva.exception.api.ServerApiException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,6 +25,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -86,6 +88,24 @@ public class WeatherApiServiceIT {
                 () -> assertThat(locations.get(0).getLatitude()).isEqualTo("51.5073219"),
                 () -> assertThat(locations.get(0).getLongitude()).isEqualTo("-0.1276474")
         );
+    }
+
+    @Test
+    public void getLocations_shouldThrowExceptionIf5xxError() {
+        String jsonResponse = "[]";
+
+        ClientResponse clientResponse = ClientResponse
+                .create(HttpStatus.INTERNAL_SERVER_ERROR)
+                .header("Content-Type", "application/json")
+                .body(jsonResponse)
+                .build();
+
+        given(exchangeFunction.exchange(any(ClientRequest.class)))
+                .willReturn(Mono.just(clientResponse));
+
+        assertThatThrownBy(() -> weatherApiService.getLocations("London"))
+                .isInstanceOf(ServerApiException.class)
+                .hasMessageContaining("Server unavailable. Please, try later");
     }
 
     @Test
