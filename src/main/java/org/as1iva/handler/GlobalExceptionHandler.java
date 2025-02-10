@@ -21,6 +21,7 @@ public class GlobalExceptionHandler {
     private static final String REDIRECT_TO_LOGIN = "redirect:/login";
 
     private static final String SIGN_IN = "sign-in";
+
     private static final String ERROR = "error";
 
     @ExceptionHandler(UserAuthenticationFailedException.class)
