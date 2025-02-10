@@ -46,9 +46,7 @@ public class HomeController {
                                  @RequestParam("lat") BigDecimal lat,
                                  @RequestParam("lon") BigDecimal lon) {
 
-        UserDto user = authService.getUserBySession(sessionId);
-
-        locationService.delete(user, lat, lon);
+        locationService.delete(sessionId, lat, lon);
 
         return REDIRECT_TO_INDEX;
     }

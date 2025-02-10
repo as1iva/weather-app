@@ -148,7 +148,9 @@ public class LocationService {
         return locationResponses;
     }
 
-    public void delete(UserDto userDto, BigDecimal lat, BigDecimal lon) {
+    public void delete(String sessionId, BigDecimal lat, BigDecimal lon) {
+
+        UserDto userDto = authService.getUserBySession(sessionId);
 
         User user = userRepository.findByLogin(userDto.getLogin())
                 .orElseThrow(() -> new DataNotFoundException("User was not found"));
