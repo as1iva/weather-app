@@ -79,13 +79,17 @@ public class WeatherApiServiceIT {
 
         List<LocationApiResponseDto> locations = weatherApiService.getLocations("London");
 
+        LocationApiResponseDto location = locations.get(0);
+
         assertAll(
                 () -> assertThat(locations).isNotNull().hasSize(1),
-                () -> assertThat(locations.get(0).getName()).isEqualTo("London"),
-                () -> assertThat(locations.get(0).getCountry()).isEqualTo("GB"),
-                () -> assertThat(locations.get(0).getState()).isEqualTo("England"),
-                () -> assertThat(locations.get(0).getLatitude()).isEqualTo("51.5073219"),
-                () -> assertThat(locations.get(0).getLongitude()).isEqualTo("-0.1276474")
+
+                () -> assertThat(location.getName()).isEqualTo("London"),
+                () -> assertThat(location.getCountry()).isEqualTo("GB"),
+                () -> assertThat(location.getState()).isEqualTo("England"),
+
+                () -> assertThat(location.getLatitude()).isEqualTo("51.5073219"),
+                () -> assertThat(location.getLongitude()).isEqualTo("-0.1276474")
         );
     }
 
