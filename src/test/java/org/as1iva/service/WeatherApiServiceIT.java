@@ -5,6 +5,7 @@ import org.as1iva.dto.response.LocationApiResponseDto;
 import org.as1iva.dto.response.LocationResponseDto;
 import org.as1iva.dto.response.WeatherApiResponseDto;
 import org.as1iva.entity.User;
+import org.as1iva.exception.api.ClientApiException;
 import org.as1iva.exception.api.ServerApiException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -192,5 +193,32 @@ public class WeatherApiServiceIT {
                 () -> assertThat(weather.getSys().getSunrise()).isEqualTo(1739085932),
                 () -> assertThat(weather.getSys().getSunset()).isEqualTo(1739120642)
         );
+    }
+
+    @Test
+    public void getWeatherByCoordinates_shouldThrowExceptionIf4xxError() {
+        String jsonResponse = "[]";
+
+        ClientResponse clientResponse = ClientResponse
+                .create(HttpStatus.BAD_REQUEST)
+                .header("Content-Type", "application/json")
+                .body(jsonResponse)
+                .build();
+
+        given(exchangeFunction.exchange(any(ClientRequest.class)))
+                .willReturn(Mono.just(clientResponse));
+
+        LocationResponseDto location = LocationResponseDto.builder()
+                .id(1L)
+                .name("London")
+                .state("England")
+                .userId(TEST_USER)
+                .latitude(BigDecimal.valueOf(51.5073))
+                .longitude(BigDecimal.valueOf(-0.1276))
+                .build();
+
+        assertThatThrownBy(() -> weatherApiService.getWeatherByCoordinates(location))
+                .isInstanceOf(ClientApiException.class)
+                .hasMessageContaining("Client error. Please, try again");
     }
 }
